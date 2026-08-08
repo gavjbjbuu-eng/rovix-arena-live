@@ -1,0 +1,44 @@
+import random
+
+def play_rovix_greedy(user_currency):
+    print("\n--------------------------------")
+    print(f"💰 Current Cheers: {user_currency}")
+    
+    try:
+        bet = int(input("Enter your bet amount: "))
+    except ValueError:
+        print("❌ Invalid input! Numbers only.")
+        return user_currency
+
+    if bet > user_currency or bet <= 0:
+        print("❌ Not enough cheers or invalid bet!")
+        return user_currency
+
+    # Total 8 items distribution as per your setup:
+    # 4 items of 5x, 1 item of 10x, 1 item of 15x, 1 item of 25x, 1 item of 55x
+    items_pool = [5, 5, 5, 5, 10, 15, 25, 55]
+    
+    # Wheel/Item spin
+    selected_multiplier = random.choice(items_pool)
+    
+    print("🔄 Spinning the items...")
+    
+    # Calculation
+    winnings = bet * selected_multiplier
+    user_currency = user_currency - bet + winnings
+    
+    print(f"🎯 Result: Hit {selected_multiplier}x Multiplier!")
+    print(f"✨ You won: {winnings} Cheers!")
+    print(f"💼 Updated Wallet Balance: {user_currency} Cheers")
+    
+    return user_currency
+
+# Game session loop
+balance = 1000
+while balance > 0:
+    balance = play_rovix_greedy(balance)
+    cont = input("\nPlay next round? (y/n): ").strip().lower()
+    if cont != 'y':
+        print("👋 Exiting ROVIX game. Saved balance!")
+        break
+
