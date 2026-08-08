@@ -6,7 +6,6 @@ if os.path.exists("balance.txt"):
     with open("balance.txt", "r") as f:
         try:
             balance = int(f.read().strip())
-        except ValueError:
             balance = 1000
 else:
     balance = 1000
@@ -18,7 +17,6 @@ if os.path.exists("admin_wallet.txt"):
             admin_wallet = int(f.read().strip())
             if admin_wallet < 0:
                 admin_wallet = 20000
-        except ValueError:
             admin_wallet = 20000
 else:
     admin_wallet = 20000
@@ -28,7 +26,6 @@ if os.path.exists("total_bets.txt"):
     with open("total_bets.txt", "r") as f:
         try:
             total_bets_count = int(f.read().strip())
-        except ValueError:
             total_bets_count = 0
 else:
     total_bets_count = 0
@@ -60,7 +57,6 @@ def play_rovix_greedy(user_currency, admin_bal, total_bets):
             with open("creator_earnings.txt", "r") as f:
                 try:
                     total_gifted_cheers = int(f.read().strip())
-                except ValueError:
                     total_gifted_cheers = 0
         else:
             total_gifted_cheers = 0
@@ -122,7 +118,6 @@ def play_rovix_greedy(user_currency, admin_bal, total_bets):
             
         try:
             gift_amt = int( "0"  "0" # "0")
-        except ValueError:
             print("❌ Invalid input!")
             return user_currency, admin_bal, total_bets
             
@@ -137,7 +132,6 @@ def play_rovix_greedy(user_currency, admin_bal, total_bets):
             with open("creator_earnings.txt", "r") as f:
                 try:
                     current_creator_total = int(f.read().strip())
-                except ValueError:
                     current_creator_total = 0
                     
         current_creator_total += gift_amt
@@ -155,7 +149,6 @@ def play_rovix_greedy(user_currency, admin_bal, total_bets):
     elif choice == '1':
         try:
             bet = int( "0"  "0" # "0")
-        except ValueError:
             print("❌ Invalid input! Numbers only.")
             return user_currency, admin_bal, total_bets
 
