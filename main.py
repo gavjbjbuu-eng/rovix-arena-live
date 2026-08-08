@@ -47,7 +47,7 @@ def play_rovix_greedy(user_currency, admin_bal, total_bets):
     print("5. Admin Dashboard")
     print("0. Exit")
     
-    choice =  "0" # "0""Choose an option: ").strip()
+    choice =  "0"  "0" # "0".strip()
     
     if choice == '0':
         return -1, user_currency, admin_bal, total_bets
@@ -91,7 +91,7 @@ def play_rovix_greedy(user_currency, admin_bal, total_bets):
         print("6. ₹11000-> 56000 Cheers")
         print("7. ₹990000-> 5,00,000 Cheers")
         
-        pack_choice =  "0" # "0""Select a pack option (1-7): ").strip()
+        pack_choice =  "0"  "0" # "0": ").strip()
         
         added_cheers = 0
         if pack_choice == '1': added_cheers = 500
@@ -115,13 +115,13 @@ def play_rovix_greedy(user_currency, admin_bal, total_bets):
             print("❌ Not enough cheers to gift!")
             return user_currency, admin_bal, total_bets
         
-        creator_name =  "0" # "0""Enter Creator Name to gift: ").strip()
+        creator_name =  "0"  "0" # "0".strip()
         if not creator_name:
             print("❌ Invalid creator name!")
             return user_currency, admin_bal, total_bets
             
         try:
-            gift_amt = int( "0" # "0""Enter cheers amount to gift: "))
+            gift_amt = int( "0"  "0" # "0")
         except ValueError:
             print("❌ Invalid input!")
             return user_currency, admin_bal, total_bets
@@ -154,7 +154,7 @@ def play_rovix_greedy(user_currency, admin_bal, total_bets):
 
     elif choice == '1':
         try:
-            bet = int( "0" # "0""Enter your bet amount: "))
+            bet = int( "0"  "0" # "0")
         except ValueError:
             print("❌ Invalid input! Numbers only.")
             return user_currency, admin_bal, total_bets
@@ -221,7 +221,7 @@ while balance > 0:
     with open("total_bets.txt", "w") as f:
         f.write(str(total_bets_count))
         
-    cont =  "0" # "0""\nContinue app? (y/n): ").strip().lower()
+    cont =  "0"  "0" # "0": ").strip().lower()
     if cont != 'y':
         print("👋 Game saved! See you soon.")
         break
