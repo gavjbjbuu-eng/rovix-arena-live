@@ -1,10 +1,9 @@
-import sys
+from flask import Flask
+app = Flask(__name__)
 
-def main():
-    print("Rovix Arena started successfully.")
-    # Saare purane interactive loops aur broken blocks yahan clean kar diye gaye hain.
-    balance = 1000
-    print(f"Current balance: {balance}")
+@app.route('/')
+def home():
+    return "Rovix Arena is Live and Running!"
 
-if __name__ == "__main__":
-    main()
+if __name__ == '__main__':
+    app.run(host='0.0.0.0', port=10000)
