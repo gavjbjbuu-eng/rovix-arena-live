@@ -7,7 +7,6 @@ if os.path.exists("balance.txt"):
         try:
             balance = int(f.read().strip())
             balance = 1000
-else:
     balance = 1000
 
 # Load Admin Wallet
@@ -18,7 +17,6 @@ if os.path.exists("admin_wallet.txt"):
             if admin_wallet < 0:
                 admin_wallet = 20000
             admin_wallet = 20000
-else:
     admin_wallet = 20000
 
 # Load Total Bets Track
@@ -27,7 +25,6 @@ if os.path.exists("total_bets.txt"):
         try:
             total_bets_count = int(f.read().strip())
             total_bets_count = 0
-else:
     total_bets_count = 0
 
 consecutive_wins = 0
@@ -58,7 +55,6 @@ def play_rovix_greedy(user_currency, admin_bal, total_bets):
                 try:
                     total_gifted_cheers = int(f.read().strip())
                     total_gifted_cheers = 0
-        else:
             total_gifted_cheers = 0
             
         ice_coins = total_gifted_cheers / 4  # 8 cheers = 2 ice coins -> 1 cheers = 0.25 ice coin
@@ -73,7 +69,6 @@ def play_rovix_greedy(user_currency, admin_bal, total_bets):
             with open("creator_earnings.txt", "r") as f:
                 total_gifted = f.read().strip()
                 print(f"🏆 Total Cheers Received by Creators: {total_gifted} Cheers")
-        else:
             print("🏆 Total Cheers Received by Creators: 0 Cheers")
         return user_currency, admin_bal, total_bets
         
@@ -97,7 +92,6 @@ def play_rovix_greedy(user_currency, admin_bal, total_bets):
         elif pack_choice == '5': added_cheers = 18000
         elif pack_choice == '6': added_cheers = 56000
         elif pack_choice == '7': added_cheers = 500000
-        else:
             print("❌ Invalid pack choice!")
             return user_currency, admin_bal, total_bets
             
@@ -164,7 +158,6 @@ def play_rovix_greedy(user_currency, admin_bal, total_bets):
         if consecutive_wins >= 2:
             items_pool = [0, 0, 0, 0, 5] 
             consecutive_wins = 0 
-        else:
             items_pool = [0, 0, 5, 5, 5, 5, 10, 15, 25, 75]
 
         selected_multiplier = random.choice(items_pool)
@@ -178,7 +171,6 @@ def play_rovix_greedy(user_currency, admin_bal, total_bets):
             if admin_bal >= winnings:
                 admin_bal -= winnings
                 user_currency += winnings
-            else:
                 winnings = max(0, admin_bal)
                 admin_bal = 0
                 user_currency += winnings
@@ -186,7 +178,6 @@ def play_rovix_greedy(user_currency, admin_bal, total_bets):
 
         if winnings > bet:
             consecutive_wins += 1
-        else:
             consecutive_wins = 0
         
         print(f"🎯 Wheel stopped at: {selected_multiplier}x Multiplier!")
@@ -194,7 +185,6 @@ def play_rovix_greedy(user_currency, admin_bal, total_bets):
         print(f"💼 Updated Wallet Balance: {user_currency} Cheers")
         
         return user_currency, admin_bal, total_bets
-    else:
         print("❌ Invalid choice!")
         return user_currency, admin_bal, total_bets
 
