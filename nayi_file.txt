@@ -1,3 +1,4 @@
+	
 import os
 import random
 import time
@@ -68,8 +69,7 @@ def get_user(phone):
     with open(USERS_FILE, "r") as f:
         for line in f:
             parts = line.strip().split("|")
-            if len(parts) >= 3 and parts[0] == phone: 
-                return {"phone": parts[0], "password": parts[1], "balance": int(parts[2])}
+            if parts[0] == phone: return {"phone": parts[0], "password": parts[1], "balance": int(parts[2])}
     return None
 
 def update_user_balance(phone, new_balance):
@@ -78,10 +78,8 @@ def update_user_balance(phone, new_balance):
         with open(USERS_FILE, "r") as f:
             for line in f:
                 parts = line.strip().split("|")
-                if len(parts) >= 3 and parts[0] == phone: 
-                    lines.append(f"{parts[0]}|{parts[1]}|{new_balance}\n")
-                else: 
-                    lines.append(line)
+                if parts[0] == phone: lines.append(f"{parts[0]}|{parts[1]}|{new_balance}\n")
+                else: lines.append(line)
         with open(USERS_FILE, "w") as f: f.writelines(lines)
 
 def get_creator_profile(phone):
@@ -201,7 +199,7 @@ def determine_admin_profit_winning_item(round_id):
             for line in f:
                 parts = line.strip().split("|")
                 if len(parts) == 2 and int(parts[0]) == round_id:
-                    winning_item = parts[1].strip()
+                    winning_item = parts[1]
                     add_to_history(round_id, winning_item)
                     return winning_item
 
@@ -766,16 +764,10 @@ def live_stream(phone):
 
             async function startCamera() {
                 try {
-                    // Fallback friendly getUserMedia wrapper for mobile local network testing over HTTP
-                    let constraints = { video: { facingMode: "user" }, audio: true };
-                    if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
-                        localStream = await navigator.mediaDevices.getUserMedia(constraints);
-                    } else {
-                        let getUserMedia = navigator.webkitGetUserMedia || navigator.mozGetUserMedia;
-                        localStream = await new Promise((resolve, reject) => {
-                            getUserMedia.call(navigator, constraints, resolve, reject);
-                        });
-                    }
+                    localStream = await navigator.mediaDevices.getUserMedia({ 
+                        video: { width: { ideal: 640 }, height: { ideal: 480 }, frameRate: { ideal: 20 }, facingMode: "user" }, 
+                        audio: true 
+                    });
                     videoElem.srcObject = localStream;
                     document.getElementById('camOverlay').style.display = 'none';
                     document.getElementById('simulatorText').style.display = 'none';
@@ -876,7 +868,7 @@ def gift_creator():
     sender_phone = session['phone']
     if sender_phone == creator_phone: return jsonify({'success': False, 'error': 'Cannot gift yourself!'})
     user = get_user(sender_phone)
-    if not user or user['balance'] < amount: return jsonify({'success': False, 'error': 'Not enough balance!'})
+    if user['balance'] < amount: return jsonify({'success': False, 'error': 'Not enough balance!'})
     update_user_balance(sender_phone, user['balance'] - amount)
     with open(GIFTS_FILE, "a") as f:
         f.write(f"{sender_phone}|{creator_phone}|{amount}|{time.time()}\n")
@@ -1226,8 +1218,7 @@ def claim_winnings():
         
     if winnings > 0:
         user = get_user(session['phone'])
-        if user:
-            update_user_balance(session['phone'], user['balance'] + winnings)
+        update_user_balance(session['phone'], user['balance'] + winnings)
         
     session[claimed_key] = True
     return jsonify({'success': True, 'winnings': winnings, 'winning_item': winning_item})
@@ -1399,8 +1390,7 @@ def game():
             }
             
             setInterval(() => {
-                fetch('/game_status').text().then(text => {
-                    let data = JSON.parse(text);
+                fetch('/game_status').then(res => res.json()).then(data => {
                     if(data.round_id !== currentRoundId) {
                         currentRoundId = data.round_id;
                         hasClaimed = false;
